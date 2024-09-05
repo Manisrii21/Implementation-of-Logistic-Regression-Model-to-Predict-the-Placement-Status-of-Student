@@ -72,9 +72,9 @@ print(classification_report1)
 lr.predict([[1,80,1,90,1,1,90,1,0,85,1,85]])
 
 
-
-## Output:
 ```
+## Output:
+
 ## y_pred
 ![image](https://github.com/user-attachments/assets/a830adf3-e86d-4bd2-a342-090e6083f98f)
 
