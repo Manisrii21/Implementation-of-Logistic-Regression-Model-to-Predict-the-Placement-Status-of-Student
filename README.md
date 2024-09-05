@@ -1,7 +1,7 @@
-# SGD-Regressor-for-Multivariate-Linear-Regression
+# Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student
 
 ## AIM:
-To write a program to predict the price of the house and number of occupants in the house with SGD regressor.
+To write a program to implement the the Logistic Regression Model to Predict the Placement Status of Student.
 
 ## Equipments Required:
 1. Hardware – PCs
@@ -29,8 +29,8 @@ step 8. End
 /*
 Program to implement the multivariate linear regression model for predicting the price of the house and number
 of occupants in the house with SGD regressor.
-Developed by: Narra Ramya
-RegisterNumber:212223040128
+Developed by: MANI SRI LATHA.M
+RegisterNumber:212223110025
 
 
 import pandas as pd
