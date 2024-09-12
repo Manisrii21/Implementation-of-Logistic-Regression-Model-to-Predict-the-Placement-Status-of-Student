@@ -22,7 +22,7 @@ STEP 6:Display the confusion matrix using metrics.ConfusionMatrixDisplay and plo
 
 STEP 7:End
 ## Program:
-```
+
 /*
 Program to implement the the Logistic Regression Model to Predict the Placement Status of Student.
 ```
@@ -66,7 +66,7 @@ from sklearn.metrics import classification_report
 classification_report1=classification_report(y_test,y_pred)
 print(classification_report1)
 lr.predict([[1,80,1,90,1,1,90,1,0,85,1,85]])
-
+```
 ## Output:
 ![image](https://github.com/user-attachments/assets/7d2cf34e-f14c-4ea4-9fca-a03b4f52aa57)
 
