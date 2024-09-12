@@ -1,133 +1,79 @@
-# Implementation-of-Logistic-Regression-Using-Gradient-Descent
+# Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student
 
 ## AIM:
-To write a program to implement the the Logistic Regression Using Gradient Descent.
+To write a program to implement the the Logistic Regression Model to Predict the Placement Status of Student.
 
 ## Equipments Required:
 1. Hardware – PCs
 2. Anaconda – Python 3.7 Installation / Jupyter notebook
 
 ## Algorithm
-Step-1:Start
+STEP 1:Start
 
-Step-2:Import the necessary python packages
+STEP 2:Load and preprocess the dataset: drop irrelevant columns, handle missing values, and encode categorical variables using LabelEncoder.
 
-Step-3:Read the dataset.
+STEP 3:Split the data into training and test sets using train_test_split.
 
-Step-4:Define X and Y array.
+STEP 4:Create and fit a logistic regression model to the training data.
 
-Step-5:Define a function for costFunction,cost and gradient.
+STEP 5:Predict the target variable on the test set and evaluate performance using accuracy, confusion matrix, and classification report.
 
-Step-6:Define a function to plot the decision boundary and predict the Regression value.
+STEP 6:Display the confusion matrix using metrics.ConfusionMatrixDisplay and plot the results.
 
-Step-7: End
-
+STEP 7:End
 ## Program:
 ```
 /*
-Program to implement the the Logistic Regression Using Gradient Descent.
+Program to implement the the Logistic Regression Model to Predict the Placement Status of Student.
+```
 Developed by: MANI SRI LATHA.M
 RegisterNumber: 212223110025
 */
-
 import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-dataset=pd.read_csv("C:/Users/admin/Desktop/Placement_Data.csv")
-dataset
-
-#dropping the serial no and salary col
-dataset=dataset.drop('sl_no',axis=1)
-dataset=dataset.drop('salary',axis=1)
-
-#categorising col for further labeling
+data=pd.read_csv("C:/Users/admin/Desktop/Placement_Data.csv")
+data.head()
+data1=data.copy()
+data1=data1.drop(["sl_no","salary"],axis=1)
+data1.head()
+data1.isnull()
+data1.duplicated().sum()
 from sklearn.preprocessing import LabelEncoder
 le=LabelEncoder()
-dataset["gender"]=dataset["gender"].astype('category')
-dataset["ssc_b"]=dataset["ssc_b"].astype('category')
-dataset["hsc_b"]=dataset["hsc_b"].astype('category')
-dataset["hsc_s"]=dataset["hsc_s"].astype('category')
-dataset["degree_t"]=dataset["degree_t"].astype('category')
-dataset["workex"]=dataset["workex"].astype('category')
-dataset["specialisation"]=dataset["specialisation"].astype('category')
-dataset["status"]=dataset["status"].astype('category')
-dataset.dtypes
-
-dataset["gender"]=dataset["gender"].cat.codes
-dataset["ssc_b"]=dataset["ssc_b"].cat.codes
-dataset["hsc_b"]=dataset["hsc_b"].cat.codes
-dataset["hsc_s"]=dataset["hsc_s"].cat.codes
-dataset["degree_t"]=dataset["degree_t"].cat.codes
-dataset["workex"]=dataset["workex"].cat.codes
-dataset["specialisation"]=dataset["specialisation"].cat.codes
-dataset["status"]=dataset["status"].cat.codes
-dataset
-
-#selecting the features and labels
-X=dataset.iloc[:,:-1].values
-Y=dataset.iloc[:,-1].values
-Y
-#initialize the model parameters.
-theta=np.random.randn(X.shape[1])
-y=Y
-#define the sigmoid function
-def sigmoid(z):
-    return 1/(1+np.exp(-z))
-
-#Define the Loss function
-def loss(theta,X,y):
-    h=sigmoid(X.dot(theta))
-    return  -np.sum(y*np.log(h)+(1-y)*log(1-h))
-
-#Define the gradient descent algorithm
-def gradient_descent(theta,X,y,alpha,num_iterations):
-    m=len(y)
-    for i in range(num_iterations):
-        h=sigmoid(X.dot(theta))
-        gradient=X.T.dot(h-y)/m
-        theta-=alpha*gradient
-    return theta
-#train the model
-theta=gradient_descent(theta,X,y,alpha=0.01,num_iterations=1000)
-#Make predictions
-def predict(theta,X):
-    h=sigmoid(X.dot(theta))
-    y_pred=np.where(h>0.5,1,0)
-    return y_pred
-y_pred=predict(theta,X)
-
-#evaluate the model
-accuracy=np.mean(y_pred.flatten()==y)
-print('Accuracy:',accuracy)
-
-print(y_pred)
-print(Y)
-xnew=np.array([[0,87,0,95,0,2,78,2,0,0,1,0]])
-y_prednew=predict(theta,xnew)
-print(y_prednew)
-xnew=np.array([[0,0,0,0,0,2,8,2,0,0,1,0]])
-y_prednew=predict(theta,xnew)
-print(y_prednew)
-```
+data1["gender"]=le.fit_transform(data1["gender"])
+data1["ssc_b"]=le.fit_transform(data1["ssc_b"])
+data1["hsc_b"]=le.fit_transform(data1["hsc_b"])
+data1["hsc_s"]=le.fit_transform(data1["hsc_s"])
+data1["degree_t"]=le.fit_transform(data1["degree_t"])
+data1["workex"]=le.fit_transform(data1["workex"])
+data1["specialisation"]=le.fit_transform(data1["specialisation"])
+data1["status"]=le.fit_transform(data1["status"])
+data1
+x=data1.iloc[:,:-1]
+x
+y=data1["status"]
+y
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=0)
+from sklearn.linear_model import LogisticRegression
+lr=LogisticRegression(solver="liblinear")#lirary for large linear classification
+lr.fit(x_train,y_train)
+y_pred=lr.predict(x_test)
+y_pred
+from sklearn.metrics import accuracy_score
+accuracy=accuracy_score(y_test,y_pred)
+accuracy
+from sklearn.metrics import classification_report
+classification_report1=classification_report(y_test,y_pred)
+print(classification_report1)
+lr.predict([[1,80,1,90,1,1,90,1,0,85,1,85]])
 
 ## Output:
-```
-Accuracy
-```
-![image](https://github.com/user-attachments/assets/645be245-5ea1-4d62-b623-669d594f46fe)
-```
-y_prednew
-```
-![Screenshot 2024-09-06 114345](https://github.com/user-attachments/assets/7c557095-2e55-47f6-9dec-08eec65b6245)
+![image](https://github.com/user-attachments/assets/7d2cf34e-f14c-4ea4-9fca-a03b4f52aa57)
 
-```
-y_prednew
-```
-![image](https://github.com/user-attachments/assets/7dc03237-b50e-4d84-98d8-c6ef44641179)
+![image](https://github.com/user-attachments/assets/6b19add8-1751-4590-a2a3-facf92fe56f8)
 
-
+![image](https://github.com/user-attachments/assets/301a357e-8415-41a0-af05-c7e9efdd2346)
 
 
 ## Result:
-Thus the program to implement the the Logistic Regression Using Gradient Descent is written and verified using python programming.
-
+Thus the program to implement the the Logistic Regression Model to Predict the Placement Status of Student is written and verified using python programming.
